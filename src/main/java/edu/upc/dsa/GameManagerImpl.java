@@ -32,8 +32,8 @@ public class GameManagerImpl implements GameManager {
         this.eventos = new LinkedList<>();
         this.registrosEvento = new HashMap<>();
 
-        eventos.add(new Evento("1", "Evento 1", "Descripción del evento 1", "2025-12-20", "2025-12-21", ""));
-        eventos.add(new Evento("2", "Evento 2", "Descripción del evento 2", "2026-01-05", "2026-01-06", ""));
+        eventos.add(new Evento("1", "Evento 1", "Torneo individual", "16-12-2025", "20-12-2025", ""));
+        eventos.add(new Evento("2", "Evento 2", "Torneo por equipos", "16-12-2025", "20-12-2025", ""));
     }
 
     public static GameManager getInstance() {
