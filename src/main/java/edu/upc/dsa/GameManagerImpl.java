@@ -1,14 +1,17 @@
 package edu.upc.dsa;
 
+import edu.upc.dsa.models.Evento;
 import edu.upc.dsa.models.Objects;
 import edu.upc.dsa.models.User;
 import edu.upc.dsa.models.GameObject;
 import org.apache.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GameManagerImpl implements GameManager {
     private static GameManager instance;
@@ -18,12 +21,19 @@ public class GameManagerImpl implements GameManager {
     // key: object name
     protected Map<String, GameObject> registred_objects;
     protected List<GameObject> objects;
+    protected List<Evento> eventos;
+    protected Map<String, Set<String>> registrosEvento;
     final static Logger logger = Logger.getLogger(GameManagerImpl.class);
 
     private GameManagerImpl() {
         this.registred_users = new HashMap<>();
         this.registred_objects = new HashMap<>();
         this.objects = new LinkedList<>();
+        this.eventos = new LinkedList<>();
+        this.registrosEvento = new HashMap<>();
+
+        eventos.add(new Evento("1", "Evento 1", "Descripción del evento 1", "2025-12-20", "2025-12-21", ""));
+        eventos.add(new Evento("2", "Evento 2", "Descripción del evento 2", "2026-01-05", "2026-01-06", ""));
     }
 
     public static GameManager getInstance() {
@@ -146,6 +156,24 @@ public class GameManagerImpl implements GameManager {
     public User getUser(String username) {
         User u = this.registred_users.get(username);
         return u;
+    }
+
+    @Override
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    @Override
+    public boolean registerEvento(String userId, String eventoId) {
+        if (userId == null || eventoId == null)
+            return false;
+
+        Set<String> inscritos = registrosEvento.get(eventoId);
+        if (inscritos == null) {
+            inscritos = new HashSet<>();
+            registrosEvento.put(eventoId, inscritos);
+        }
+        return inscritos.add(userId);
     }
 
     // ------------------------------------------------
